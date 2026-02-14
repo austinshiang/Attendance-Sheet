@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專業排班管理系統</title>
+    <title>排班管理系統</title>
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <style>
         :root {
@@ -82,9 +82,9 @@
     </div>
 
     <div class="config-zone">
-        <div class="config-item"><div class="color-dot" style="background:var(--c1)"></div> <input type="text" id="t1" value="早班" oninput="saveConfig(); updateUI()"></div>
-        <div class="config-item"><div class="color-dot" style="background:var(--c2)"></div> <input type="text" id="t2" value="晚班" oninput="saveConfig(); updateUI()"></div>
-        <div class="config-item"><div class="color-dot" style="background:var(--c3)"></div> <input type="text" id="t3" value="加班" oninput="saveConfig(); updateUI()"></div>
+        <div class="config-item"><div class="color-dot" style="background:var(--c1)"></div> <input type="text" id="t1" value="抖音" oninput="saveConfig(); updateUI()"></div>
+        <div class="config-item"><div class="color-dot" style="background:var(--c2)"></div> <input type="text" id="t2" value="長影片" oninput="saveConfig(); updateUI()"></div>
+        <div class="config-item"><div class="color-dot" style="background:var(--c3)"></div> <input type="text" id="t3" value="出勤" oninput="saveConfig(); updateUI()"></div>
         <div class="config-item"><div class="color-dot" style="background:var(--c4)"></div> <input type="text" id="t4" value="休假" oninput="saveConfig(); updateUI()"></div>
     </div>
 
@@ -105,7 +105,7 @@
     
     // 從本地讀取資料，若無則初始化
     let scheduleData = JSON.parse(localStorage.getItem('schedule_data')) || {};
-    let configNames = JSON.parse(localStorage.getItem('schedule_config')) || ["早班", "晚班", "加班", "休假"];
+    let configNames = JSON.parse(localStorage.getItem('schedule_config')) || ["抖音", "長影片", "出勤", "休假"];
 
     function init() {
         // 初始化標籤內容
