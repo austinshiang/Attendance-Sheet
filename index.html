@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專業排班管理系統</title>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --c1: #ff7675; --c2: #55efc4; --c3: #74b9ff; --c4: #ffe119;
+            --border: #dcdde1;
+        }
+        * { box-sizing: border-box; }
+        body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; background: #f5f6fa; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; max-width: 900px; position: relative; }
+        
+        /* 佈局：左上角選擇器與大日期 */
+        .header-top { display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 15px; }
+        .controls { display: flex; gap: 8px; margin-bottom: 10px; }
+        select { padding: 6px 12px; border-radius: 6px; border: 1px solid #ddd; background: #fff; font-size: 14px; cursor: pointer; }
+        
+        .big-date-display { font-size: 3.5rem; font-weight: 900; color: #2f3640; line-height: 1; }
+
+        /* 設定區 */
+        .config-zone { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        @media (min-width: 600px) { .config-zone { grid-template-columns: repeat(4, 1fr); } }
+        .config-item { display: flex; align-items: center; gap: 6px; }
+        .color-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+        input[type="text"] { border: 1px solid #eee; border-bottom: 2px solid #ddd; padding: 4px; width: 100%; font-size: 13px; outline: none; transition: 0.3s; }
+        input[type="text"]:focus { border-bottom-color: #4a90e2; }
+
+        /* 月曆主體：無縫格線 */
+        .calendar { display: grid; grid-template-columns: repeat(7, 1fr); border-top: 1px solid var(--border); border-left: 1px solid var(--border); width: 100%; background: white; }
+        .weekday { text-align: center; font-weight: bold; background: #f8f9fa; padding: 12px 0; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 13px; color: #7f8c8d; }
+        
+        .day { 
+            min-height: 100px; aspect-ratio: 0.85; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+            display: flex; flex-direction: column; position: relative; 
+        }
+        .day-num { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            z-index: 1; font-size: 32px; font-weight: 900; pointer-events: none; 
+            color: rgba(0,0,0,0.08); 
+        }
+        
+        /* 條紋層 */
+        .layer-container { display: flex; flex-direction: column; height: 100%; width: 100%; z-index: 2; }
+        .layer { 
+            flex: 1; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: bold; color: transparent; overflow: hidden; white-space: nowrap; padding: 0 4px;
+            border-bottom: 1px solid rgba(0,0,0,0.02);
+        }
+        .layer.active { color: #2f3542; }
+        .layer.l1.active { background: var(--c1); }
+        .layer.l2.active { background: var(--c2); }
+        .layer.l3.active { background: var(--c3); }
+        .layer.l4.active { background: var(--c4); }
+
+        /* 統計與功能按鈕 */
+        .stats { margin-top: 15px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+        @media (min-width: 600px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+        .stat-box { background: white; padding: 12px; text-align: center; }
+        .stat-num { font-size: 20px; font-weight: bold; display: block; }
+
+        .btn-group { display: flex; gap: 10px; margin-top: 15px; width: 100%; }
+        button { flex: 1; padding: 12px; cursor: pointer; border: none; border-radius: 8px; font-weight: bold; transition: 0.2s; }
+        .btn-excel { background: #217346; color: white; }
+        .btn-clear { background: #eb4d4b; color: white; flex: 0.3; }
+        button:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header-top">
+        <div class="controls">
+            <select id="yearSelect"></select>
+            <select id="monthSelect"></select>
+        </div>
+        <div class="big-date-display" id="bigDate">2026 / 02</div>
+    </div>
+
+    <div class="config-zone">
+        <div class="config-item"><div class="color-dot" style="background:var(--c1)"></div> <input type="text" id="t1" value="早班" oninput="saveConfig(); updateUI()"></div>
+        <div class="config-item"><div class="color-dot" style="background:var(--c2)"></div> <input type="text" id="t2" value="晚班" oninput="saveConfig(); updateUI()"></div>
+        <div class="config-item"><div class="color-dot" style="background:var(--c3)"></div> <input type="text" id="t3" value="加班" oninput="saveConfig(); updateUI()"></div>
+        <div class="config-item"><div class="color-dot" style="background:var(--c4)"></div> <input type="text" id="t4" value="休假" oninput="saveConfig(); updateUI()"></div>
+    </div>
+
+    <div class="calendar" id="calendar">
+        </div>
+
+    <div class="stats" id="statsArea"></div>
+
+    <div class="btn-group">
+        <button class="btn-clear" onclick="clearCurrentMonth()">清空本月</button>
+        <button class="btn-excel" onclick="exportExcel()">匯出 Excel 報表</button>
+    </div>
+</div>
+
+<script>
+    const calendar = document.getElementById('calendar');
+    const bigDate = document.getElementById('bigDate');
+    
+    // 從本地讀取資料，若無則初始化
+    let scheduleData = JSON.parse(localStorage.getItem('schedule_data')) || {};
+    let configNames = JSON.parse(localStorage.getItem('schedule_config')) || ["早班", "晚班", "加班", "休假"];
+
+    function init() {
+        // 初始化標籤內容
+        configNames.forEach((name, i) => document.getElementById('t' + (i + 1)).value = name);
+
+        const yS = document.getElementById('yearSelect');
+        const mS = document.getElementById('monthSelect');
+        const now = new Date();
+        for(let i=now.getFullYear()-2; i<=now.getFullYear()+5; i++) yS.add(new Option(i + " 年", i));
+        for(let i=0; i<12; i++) mS.add(new Option((i+1) + " 月", i));
+        
+        yS.value = now.getFullYear();
+        mS.value = now.getMonth();
+        yS.onchange = mS.onchange = render;
+        render();
+    }
+
+    function saveConfig() {
+        configNames = [1,2,3,4].map(i => document.getElementById('t'+i).value);
+        localStorage.setItem('schedule_config', JSON.stringify(configNames));
+    }
+
+    function saveData() {
+        localStorage.setItem('schedule_data', JSON.stringify(scheduleData));
+    }
+
+    function render() {
+        const y = parseInt(document.getElementById('yearSelect').value);
+        const m = parseInt(document.getElementById('monthSelect').value);
+        bigDate.innerText = `${y} / ${(m+1).toString().padStart(2, '0')}`;
+        
+        const firstDay = new Date(y, m, 1).getDay();
+        const offset = (firstDay === 0 ? 6 : firstDay - 1);
+        const daysInMonth = new Date(y, m+1, 0).getDate();
+
+        calendar.innerHTML = `
+            <div class="weekday">一</div><div class="weekday">二</div><div class="weekday">三</div>
+            <div class="weekday">四</div><div class="weekday">五</div><div class="weekday">六</div><div class="weekday">日</div>
+        `;
+
+        for(let i=0; i<offset; i++) {
+            calendar.appendChild(Object.assign(document.createElement('div'), {className:'day', style:'background:#fdfdfd'}));
+        }
+
+        for(let d=1; d<=daysInMonth; d++) {
+            const dateStr = `${y}-${m+1}-${d}`;
+            if(!scheduleData[dateStr]) scheduleData[dateStr] = { types: [false,false,false,false], notes: ["","","",""] };
+
+            const dayDiv = document.createElement('div');
+            dayDiv.className = 'day';
+            dayDiv.innerHTML = `<div class="day-num">${d}</div>`;
+
+            const container = document.createElement('div');
+            container.className = 'layer-container';
+
+            for(let L=0; L<4; L++) {
+                const layer = document.createElement('div');
+                layer.className = `layer l${L+1} ${scheduleData[dateStr].types[L] ? 'active' : ''}`;
+                layer.innerText = scheduleData[dateStr].notes[L] || "";
+                
+                layer.onclick = () => {
+                    scheduleData[dateStr].types[L] = !scheduleData[dateStr].types[L];
+                    saveData();
+                    render();
+                };
+                layer.ondblclick = (e) => {
+                    e.stopPropagation();
+                    const val = prompt("輸入備註:", scheduleData[dateStr].notes[L]);
+                    if (val !== null) {
+                        scheduleData[dateStr].notes[L] = val;
+                        saveData();
+                        render();
+                    }
+                };
+                container.appendChild(layer);
+            }
+            dayDiv.appendChild(container);
+            calendar.appendChild(dayDiv);
+        }
+        updateUI();
+    }
+
+    function updateUI() {
+        const y = document.getElementById('yearSelect').value;
+        const m = parseInt(document.getElementById('monthSelect').value) + 1;
+        const counts = [0, 0, 0, 0];
+        Object.keys(scheduleData).forEach(key => {
+            if(key.startsWith(`${y}-${m}-`)) {
+                scheduleData[key].types.forEach((val, idx) => { if(val) counts[idx]++; });
+            }
+        });
+        document.getElementById('statsArea').innerHTML = [1,2,3,4].map(i => `
+            <div class="stat-box">
+                <span style="font-size:11px; color:#888">${document.getElementById('t'+i).value}</span>
+                <span class="stat-num">${counts[i-1]}</span>
+            </div>
+        `).join('');
+    }
+
+    function clearCurrentMonth() {
+        const y = document.getElementById('yearSelect').value;
+        const m = parseInt(document.getElementById('monthSelect').value) + 1;
+        if(confirm(`確定要清除 ${y}年${m}月 的所有排班紀錄嗎？此動作無法復原。`)) {
+            Object.keys(scheduleData).forEach(key => {
+                if(key.startsWith(`${y}-${m}-`)) delete scheduleData[key];
+            });
+            saveData();
+            render();
+        }
+    }
+
+    function exportExcel() {
+        const y = document.getElementById('yearSelect').value;
+        const m = parseInt(document.getElementById('monthSelect').value) + 1;
+        const labels = configNames;
+        const data = [["日期", ...labels, "備註匯總"]];
+        const daysInMonth = new Date(y, m, 0).getDate();
+
+        for(let d=1; d<=daysInMonth; d++) {
+            const dateStr = `${y}-${m}-${d}`;
+            const info = scheduleData[dateStr] || { types:[], notes:[] };
+            const row = [`${y}/${m}/${d}`];
+            labels.forEach((_, i) => row.push(info.types[i] ? "V" : ""));
+            row.push(info.notes.filter(n => n).join('; '));
+            data.push(row);
+        }
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "排班資料");
+        XLSX.writeFile(wb, `排班表_${y}_${m}.xlsx`);
+    }
+
+    init();
+</script>
+
+</body>
+</html>
