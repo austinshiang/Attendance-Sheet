@@ -9,45 +9,27 @@
         :root {
             --c1: #ff7675; --c2: #55efc4; --c3: #74b9ff; --c4: #ffe119;
             --border-thick: 2px solid #2f3542;
-            --border-thin: 1px solid #dcdde1;
-            --gold: #f1c40f;
         }
         * { box-sizing: border-box; font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; }
         body { background: #f1f2f6; margin: 0; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        
-        .id-zone { 
-            background: #2f3542; color: white; width: 100%; max-width: 950px; 
-            padding: 15px 25px; border-radius: 12px 12px 0 0; 
-            display: flex; align-items: center; justify-content: space-between; 
-            flex-wrap: wrap; gap: 10px;
-        }
-        .report-controls { display: flex; align-items: center; gap: 10px; }
-        .report-select, .setting-select { padding: 6px; border-radius: 6px; border: none; font-weight: bold; }
+        .id-zone { background: #2f3542; color: white; width: 100%; max-width: 950px; padding: 15px 25px; border-radius: 12px 12px 0 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
         .status-tag { font-size: 12px; color: #00d8ff; border: 1px solid #00d8ff; padding: 2px 8px; border-radius: 10px; min-width: 120px; text-align: center; }
-
         .card { background: white; padding: 20px; border-radius: 0 0 12px 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 950px; }
-        
         .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .big-date-display { font-size: 2.5rem; font-weight: 900; color: #2d3436; }
-
         .config-zone { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
         .config-item { display: flex; align-items: center; gap: 5px; background: #f9f9f9; padding: 8px; border-radius: 6px; }
         .color-dot { width: 12px; height: 12px; border-radius: 50%; }
         .config-item input { border: none; border-bottom: 1px solid #ccc; background: transparent; width: 100%; font-size: 14px; outline: none; }
-
         .calendar-container { width: 100%; border-top: var(--border-thick); }
         .weekday-header { display: grid; grid-template-columns: repeat(7, 1fr); background: #2f3542; color: white; }
         .weekday { text-align: center; padding: 10px; font-size: 14px; }
-        
         .week-row { display: grid; grid-template-columns: repeat(7, 1fr); border-left: var(--border-thick); }
-        .day { min-height: 120px; border-right: var(--border-thick); border-bottom: var(--border-thick); display: flex; flex-direction: column; transition: 0.2s; background: white; }
+        .day { min-height: 120px; border-right: var(--border-thick); border-bottom: var(--border-thick); display: flex; flex-direction: column; background: white; }
         .day.empty { background: #f1f2f6; }
         .day.checked-in { background: #e8f8f5 !important; }
-        
         .day-header { background: #fdfdfd; padding: 2px 8px; font-size: 13px; font-weight: bold; color: #999; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .check-btn { cursor: pointer; font-size: 14px; color: #ccc; }
-        .day.checked-in .check-btn { color: #27ae60; }
-
+        .check-btn { cursor: pointer; font-size: 14px; }
         .layer-container { flex: 1; display: flex; flex-direction: column; }
         .layer { flex: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; color: transparent; }
         .layer.active { color: #2f3542; }
@@ -55,35 +37,21 @@
         .layer.l2.active { background: var(--c2); }
         .layer.l3.active { background: var(--c3); }
         .layer.l4.active { background: var(--c4); }
-
-        .achievement-zone { background: #f8f9fa; border: 1px solid #e1e4e8; border-radius: 12px; padding: 15px; margin-top: 20px; text-align: center; position: relative; overflow: hidden; }
-        .ach-title { font-size: 14px; color: #636e72; font-weight: bold; margin-bottom: 10px; display: block; }
-        .progress-container { width: 100%; height: 20px; background: #dfe6e9; border-radius: 10px; overflow: hidden; margin: 10px 0; border: 1px solid #ddd; }
+        .achievement-zone { background: #f8f9fa; border: 1px solid #e1e4e8; border-radius: 12px; padding: 15px; margin-top: 20px; text-align: center; }
+        .progress-container { width: 100%; height: 20px; background: #dfe6e9; border-radius: 10px; overflow: hidden; margin: 10px 0; }
         .progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #55efc4, #00b894); transition: width 0.8s ease; }
-        .progress-bar.perfect { background: linear-gradient(90deg, #ffe66d, #ffc048); box-shadow: 0 0 15px rgba(241, 196, 15, 0.5); }
-        .ach-text { font-size: 18px; font-weight: 900; color: #2d3436; }
-        .perfect-msg { color: #d35400; font-weight: bold; display: none; animation: bounce 0.5s infinite alternate; }
-
+        .progress-bar.perfect { background: linear-gradient(90deg, #ffe66d, #ffc048); box-shadow: 0 0 10px rgba(241,196,15,0.5); }
         .stats-zone { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #2f3542; border: 2px solid #2f3542; border-radius: 8px; margin-top: 15px; overflow: hidden; }
         .stat-box { background: white; padding: 10px; text-align: center; }
-        .stat-label { font-size: 11px; color: #888; font-weight: bold; display: block; }
-        .stat-value { font-size: 20px; font-weight: 900; color: #2d3436; }
-
         .btn-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
-        button.action { flex: 1; padding: 12px; cursor: pointer; border: none; border-radius: 8px; font-weight: bold; color: white; min-width: 140px; transition: 0.2s; }
-        .btn-save { background: #0984e3; }
-        .btn-load { background: #6c5ce7; }
-        .btn-excel { background: #217346; }
-        button:hover { filter: brightness(1.1); }
-        
-        @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+        button.action { flex: 1; padding: 12px; cursor: pointer; border: none; border-radius: 8px; font-weight: bold; color: white; min-width: 140px; }
+        .btn-save { background: #0984e3; } .btn-load { background: #6c5ce7; } .btn-excel { background: #217346; }
         #confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
     </style>
 </head>
 <body>
 
 <canvas id="confetti"></canvas>
-
 <div class="id-zone">
     <div class="report-controls">
         <span>📂 報表：</span>
@@ -106,28 +74,21 @@
             <select id="monthSelect" onchange="render()"></select>
         </div>
     </div>
-
     <div class="config-zone">
         <div class="config-item"><div class="color-dot" style="background:var(--c1)"></div><input type="text" id="t1" oninput="saveLocal()"></div>
         <div class="config-item"><div class="color-dot" style="background:var(--c2)"></div><input type="text" id="t2" oninput="saveLocal()"></div>
         <div class="config-item"><div class="color-dot" style="background:var(--c3)"></div><input type="text" id="t3" oninput="saveLocal()"></div>
         <div class="config-item"><div class="color-dot" style="background:var(--c4)"></div><input type="text" id="t4" oninput="saveLocal()"></div>
     </div>
-
     <div id="weekdayHeader" class="weekday-header"></div>
     <div id="calendarWeeks"></div>
-
     <div class="achievement-zone">
-        <span class="ach-title">🏆 當月打卡達成率</span>
-        <div class="ach-text"><span id="checkCount">0</span> / <span id="totalDaysCount">0</span> 天 (<span id="percentText">0%</span>)</div>
-        <div class="progress-container">
-            <div id="progressBar" class="progress-bar"></div>
-        </div>
-        <div id="perfectMsg" class="perfect-msg">✨ 太棒了！本月達成 100% 完美點亮！ ✨</div>
+        <span style="font-size:14px; font-weight:bold; color:#636e72;">🏆 當月打卡達成率</span>
+        <div style="font-size:18px; font-weight:900;"><span id="checkCount">0</span> / <span id="totalDaysCount">0</span> 天 (<span id="percentText">0%</span>)</div>
+        <div class="progress-container"><div id="progressBar" class="progress-bar"></div></div>
+        <div id="perfectMsg" style="display:none; color:#d35400; font-weight:bold;">✨ 太棒了！本月達成 100% 完美點亮！ ✨</div>
     </div>
-
     <div id="statsZone" class="stats-zone"></div>
-
     <div class="btn-group">
         <button class="action btn-save" id="btnSave" onclick="syncToCloud()">☁️ 儲存至雲端</button>
         <button class="action btn-load" id="btnLoad" onclick="loadFromCloud()">📥 下載雲端資料</button>
@@ -137,12 +98,62 @@
 </div>
 
 <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbz93-meRJyykGkoblEjjR_MzWBwmEsB9XUpyWLWIGuy6jfmxr5iKMQPoduKXOeyd3ho/exec";
+    // 請確認此網址與您的 GAS 部署網址一致
+    const API_URL = "https://script.google.com/macros/s/AKfycbyOnxl9l5Zn-wy1Y8RJv1DecakS5th-th5W4L1FlP8sKVp0wpNayjDAtKwc9ohKUS-Q/exec";
+
     let allReportIds = JSON.parse(localStorage.getItem('reports_v3')) || ['Default_Report'];
     let currentId = localStorage.getItem('current_id_v3') || 'Default_Report';
     let scheduleData = {};
     let configNames = [];
 
+    // --- 改良版通訊邏輯 ---
+    async function apiCall(params) {
+        // 使用 POST 配合 text/plain 繞過 CORS 預檢
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            mode: 'cors', // 必須開啟 cors
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(params)
+        });
+        return await response.text();
+    }
+
+    async function syncToCloud() {
+        const btn = document.getElementById('btnSave');
+        btn.disabled = true; btn.innerText = "同步中...";
+        try {
+            const payload = JSON.stringify({ data: scheduleData, config: configNames });
+            const result = await apiCall({ action: "save", reportId: currentId, payload: payload });
+            if(result.includes("SUCCESS")) {
+                document.getElementById('syncStatus').innerText = "✅ 雲端已更新";
+                btn.innerText = "☁️ 儲存完成";
+            }
+        } catch (e) { 
+            alert("同步失敗，請確認 GAS 權限設定。"); 
+            console.error(e);
+        } finally { setTimeout(() => { btn.disabled = false; btn.innerText = "☁️ 儲存至雲端"; }, 1500); }
+    }
+
+    async function loadFromCloud(isSilent = false) {
+        if(!isSilent) document.getElementById('btnLoad').innerText = "下載中...";
+        try {
+            const result = await apiCall({ action: "load", reportId: currentId });
+            if(result !== "NotFound" && result.trim() !== "") {
+                const imported = JSON.parse(result);
+                scheduleData = imported.data;
+                configNames = imported.config;
+                saveLocal();
+                render();
+                document.getElementById('syncStatus').innerText = "✅ 已同步最新資料";
+            } else if(!isSilent) {
+                alert("雲端無資料");
+            }
+        } catch (e) {
+            if(!isSilent) alert("讀取失敗");
+        } finally { document.getElementById('btnLoad').innerText = "📥 下載雲端資料"; }
+    }
+
+    // --- 其他原有功能保持不變 ---
     function init() {
         const yS = document.getElementById('yearSelect');
         const mS = document.getElementById('monthSelect');
@@ -153,6 +164,7 @@
         updateReportUI();
         loadLocal(currentId);
         render();
+        loadFromCloud(true); // 初始化自動背景抓取
     }
 
     function updateReportUI() {
@@ -176,67 +188,6 @@
         updateStats();
     }
 
-    // 全自動背景同步補丁
-    async function silentLoadFromCloud() {
-        const status = document.getElementById('syncStatus');
-        status.innerText = "🔍 正在檢查雲端...";
-        try {
-            const response = await fetch(`${API_URL}?action=load&reportId=${encodeURIComponent(currentId)}`);
-            const text = await response.text();
-            if(text !== "NotFound" && text.trim() !== "") {
-                const imported = JSON.parse(text);
-                scheduleData = imported.data;
-                configNames = imported.config;
-                saveLocal();
-                render();
-                status.innerText = "✅ 自動同步成功";
-            } else {
-                status.innerText = "☁️ 雲端無此報表";
-            }
-        } catch (e) {
-            status.innerText = "⚠️ 自動連網失敗";
-        }
-    }
-
-    async function syncToCloud() {
-        const btn = document.getElementById('btnSave');
-        btn.disabled = true; btn.innerText = "同步中...";
-        const payload = JSON.stringify({ data: scheduleData, config: configNames });
-        try {
-            const finalUrl = `${API_URL}?action=save&reportId=${encodeURIComponent(currentId)}&payload=${encodeURIComponent(payload)}`;
-            await fetch(finalUrl, { method: 'GET', mode: 'no-cors' });
-            document.getElementById('syncStatus').innerText = "✅ 雲端已更新";
-            btn.innerText = "☁️ 儲存完成";
-        } catch (e) { alert("同步失敗"); }
-        finally { setTimeout(() => { btn.disabled = false; btn.innerText = "☁️ 儲存至雲端"; }, 1500); }
-    }
-
-    async function loadFromCloud() {
-        const btn = document.getElementById('btnLoad');
-        if(!confirm("確定要手動下載雲端資料嗎？\n這將覆蓋您目前未存檔的內容。")) return;
-        btn.disabled = true; btn.innerText = "下載中...";
-        try {
-            const response = await fetch(`${API_URL}?action=load&reportId=${encodeURIComponent(currentId)}`);
-            const text = await response.text();
-            if(text === "NotFound") { alert("雲端找不到此 ID 的報表資料。"); } 
-            else {
-                const imported = JSON.parse(text);
-                scheduleData = imported.data;
-                configNames = imported.config;
-                saveLocal();
-                location.reload();
-            }
-        } catch (e) { alert("讀取失敗"); }
-        finally { btn.disabled = false; btn.innerText = "📥 下載雲端資料"; }
-    }
-
-    function toggleCheckIn(dateStr) {
-        if (!scheduleData[dateStr]) scheduleData[dateStr] = { types:[false,false,false,false], notes:["","","",""] };
-        scheduleData[dateStr].checked = !scheduleData[dateStr].checked;
-        saveLocal();
-        render();
-    }
-
     function render() {
         const y = parseInt(document.getElementById('yearSelect').value);
         const m = parseInt(document.getElementById('monthSelect').value);
@@ -250,148 +201,73 @@
         const dayIdx = firstDate.getDay();
         const offset = startDay === 1 ? (dayIdx === 0 ? 6 : dayIdx - 1) : dayIdx;
         const daysInMonth = new Date(y, m+1, 0).getDate();
-        let cur = 1;
-        let row = document.createElement('div');
-        row.className = 'week-row';
+        let cur = 1, row = document.createElement('div'); row.className = 'week-row';
         for(let i=0; i<offset; i++) row.appendChild(Object.assign(document.createElement('div'), {className:'day empty'}));
         while(cur <= daysInMonth) {
             const dStr = `${y}-${m+1}-${cur}`;
             if(!scheduleData[dStr]) scheduleData[dStr] = { types:[false,false,false,false], notes:["","","",""], checked: false };
             const dayDiv = document.createElement('div');
             dayDiv.className = `day ${scheduleData[dStr].checked ? 'checked-in' : ''}`;
-            const isChecked = scheduleData[dStr].checked;
-            dayDiv.innerHTML = `
-                <div class="day-header">
-                    <span style="cursor:pointer" onclick="toggleCheckIn('${dStr}')">${cur}</span>
-                    <span class="check-btn" onclick="toggleCheckIn('${dStr}')">${isChecked ? '🔥' : '🔘'}</span>
-                </div>`;
-            const container = document.createElement('div');
-            container.className = 'layer-container';
+            dayDiv.innerHTML = `<div class="day-header"><span onclick="toggleCheckIn('${dStr}')" style="cursor:pointer">${cur}</span><span class="check-btn" onclick="toggleCheckIn('${dStr}')">${scheduleData[dStr].checked ? '🔥' : '🔘'}</span></div>`;
+            const container = document.createElement('div'); container.className = 'layer-container';
             for(let L=0; L<4; L++) {
                 const layer = document.createElement('div');
                 layer.className = `layer l${L+1} ${scheduleData[dStr].types[L] ? 'active' : ''}`;
                 layer.innerText = scheduleData[dStr].notes[L] || "";
                 layer.onclick = () => { scheduleData[dStr].types[L] = !scheduleData[dStr].types[L]; saveLocal(); render(); };
-                layer.ondblclick = () => {
-                    const v = prompt("備註:", scheduleData[dStr].notes[L]);
-                    if(v !== null) { scheduleData[dStr].notes[L] = v; saveLocal(); render(); }
-                };
+                layer.ondblclick = () => { const v = prompt("備註:", scheduleData[dStr].notes[L]); if(v!==null){ scheduleData[dStr].notes[L]=v; saveLocal(); render();} };
                 container.appendChild(layer);
             }
-            dayDiv.appendChild(container);
-            row.appendChild(dayDiv);
+            dayDiv.appendChild(container); row.appendChild(dayDiv);
             if(row.children.length === 7) { weeksArea.appendChild(row); row = document.createElement('div'); row.className = 'week-row'; }
             cur++;
         }
-        if(row.children.length > 0) {
-            while(row.children.length < 7) row.appendChild(Object.assign(document.createElement('div'), {className:'day empty'}));
-            weeksArea.appendChild(row);
-        }
+        if(row.children.length > 0) { while(row.children.length < 7) row.appendChild(Object.assign(document.createElement('div'), {className:'day empty'})); weeksArea.appendChild(row); }
         updateStats();
     }
 
+    function toggleCheckIn(dateStr) {
+        scheduleData[dateStr].checked = !scheduleData[dateStr].checked;
+        saveLocal(); render();
+    }
+
     function updateStats() {
-        const y = document.getElementById('yearSelect').value;
-        const m = parseInt(document.getElementById('monthSelect').value) + 1;
+        const y = document.getElementById('yearSelect').value, m = parseInt(document.getElementById('monthSelect').value)+1;
         const daysInMonth = new Date(y, m, 0).getDate();
-        const counts = [0, 0, 0, 0];
-        let checkedCount = 0;
+        let counts = [0,0,0,0], checkedCount = 0;
         Object.keys(scheduleData).forEach(key => {
             if(key.startsWith(`${y}-${m}-`)) {
-                scheduleData[key].types.forEach((active, i) => { if(active) counts[i]++; });
+                scheduleData[key].types.forEach((v, i) => { if(v) counts[i]++; });
                 if(scheduleData[key].checked) checkedCount++;
             }
         });
-        document.getElementById('statsZone').innerHTML = configNames.map((name, i) => `
-            <div class="stat-box"><span class="stat-label">${name}</span><span class="stat-value">${counts[i]}</span></div>
-        `).join('');
+        document.getElementById('statsZone').innerHTML = configNames.map((n, i) => `<div class="stat-box"><span style="font-size:11px;color:#888;">${n}</span><br><b>${counts[i]}</b></div>`).join('');
         const percent = Math.floor((checkedCount / daysInMonth) * 100);
         document.getElementById('checkCount').innerText = checkedCount;
         document.getElementById('totalDaysCount').innerText = daysInMonth;
         document.getElementById('percentText').innerText = percent + "%";
-        const bar = document.getElementById('progressBar');
-        bar.style.width = percent + "%";
-        const msg = document.getElementById('perfectMsg');
-        if (percent === 100) {
-            bar.classList.add('perfect');
-            msg.style.display = 'block';
-            if (window.lastPerfectMonth !== `${y}-${m}`) { fireConfetti(); window.lastPerfectMonth = `${y}-${m}`; }
-        } else {
-            bar.classList.remove('perfect');
-            msg.style.display = 'none';
-        }
+        document.getElementById('progressBar').style.width = percent + "%";
+        if(percent === 100) { document.getElementById('progressBar').classList.add('perfect'); document.getElementById('perfectMsg').style.display = 'block'; }
+        else { document.getElementById('progressBar').classList.remove('perfect'); document.getElementById('perfectMsg').style.display = 'none'; }
     }
 
-    function fireConfetti() {
-        const canvas = document.getElementById('confetti');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particles = [];
-        for(let i=0; i<100; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                size: Math.random() * 8 + 4,
-                color: `hsl(${Math.random() * 360}, 80%, 60%)`,
-                v: Math.random() * 3 + 2
-            });
-        }
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.size, p.size); p.y += p.v;
-            });
-            if(particles[0].y < canvas.height) requestAnimationFrame(draw);
-            else ctx.clearRect(0,0,canvas.width, canvas.height);
-        }
-        draw();
-    }
-
-    // 整合後的切換報表邏輯
-    async function switchReport() { 
-        const selectedId = document.getElementById('reportList').value;
-        loadLocal(selectedId); 
-        render(); 
-        // 如果本地端完全沒有日期資料，自動跑一次雲端檢查
-        if (Object.keys(scheduleData).length <= 4) { // 預設 config 只有 4 個 key
-            await silentLoadFromCloud(); 
-        }
-    }
-
-    // 整合後的新增報表邏輯
-    async function createNewReport() {
+    function createNewReport() {
         const n = prompt("新報表 ID:");
         if(n && n.trim()) {
             const id = n.trim();
-            if(!allReportIds.includes(id)) {
-                allReportIds.push(id);
-                localStorage.setItem('reports_v3', JSON.stringify(allReportIds));
-            }
-            loadLocal(id); 
-            updateReportUI(); 
-            render();
-            // 新增後自動詢問雲端有無此 ID 資料
-            await silentLoadFromCloud();
+            if(!allReportIds.includes(id)) { allReportIds.push(id); localStorage.setItem('reports_v3', JSON.stringify(allReportIds)); }
+            loadLocal(id); updateReportUI(); render(); loadFromCloud(true);
         }
     }
 
-    function clearData() {
-        if(confirm("確定清空本月？")) {
-            const y = document.getElementById('yearSelect').value;
-            const m = parseInt(document.getElementById('monthSelect').value) + 1;
-            Object.keys(scheduleData).forEach(k => { if(k.startsWith(`${y}-${m}-`)) delete scheduleData[k]; });
-            saveLocal(); render();
-        }
-    }
-
+    function switchReport() { loadLocal(document.getElementById('reportList').value); render(); loadFromCloud(true); }
+    function clearData() { if(confirm("清空本月？")){ const y = document.getElementById('yearSelect').value, m = parseInt(document.getElementById('monthSelect').value)+1; Object.keys(scheduleData).forEach(k => { if(k.startsWith(`${y}-${m}-`)) delete scheduleData[k]; }); saveLocal(); render(); } }
     function exportExcel() {
-        const y = document.getElementById('yearSelect').value;
-        const m = parseInt(document.getElementById('monthSelect').value) + 1;
-        const data = [["日期", ...configNames, "打卡狀態", "備註彙整"]];
+        const y = document.getElementById('yearSelect').value, m = parseInt(document.getElementById('monthSelect').value)+1;
+        const data = [["日期", ...configNames, "打卡", "備註"]];
         for(let d=1; d<=new Date(y, m, 0).getDate(); d++) {
             const info = scheduleData[`${y}-${m}-${d}`] || { types:[], notes:[], checked: false };
-            data.push([`${y}/${m}/${d}`, ...info.types.map(t => t?"V":""), info.checked ? "已確認" : "", info.notes.filter(n=>n).join('; ')]);
+            data.push([`${y}/${m}/${d}`, ...info.types.map(t => t?"V":""), info.checked ? "已打卡":"", info.notes.filter(n=>n).join('; ')]);
         }
         XLSX.writeFile(XLSX.utils.book_append_sheet(XLSX.utils.book_new(), XLSX.utils.aoa_to_sheet(data), "Schedule"), `排班_${currentId}.xlsx`);
     }
